@@ -45,14 +45,14 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(height: 5.h),
               CustomTextField(
                 controller: nameController,
-                hintText: 'Name',
+                hintText: 'Full Name',
                 icon: Icons.person,
               ),
               // SizedBox(height: 1.h),
               CustomTextField(
                 controller: phoneNumberController,
-                hintText: 'Phone Number',
-                icon: Icons.phone,
+                hintText: 'Email',
+                icon: Icons.email,
               ),
               // SizedBox(height: 1.h),
               CustomTextField(
@@ -118,7 +118,7 @@ class SignUpScreen extends StatelessWidget {
                       width: 10.w,
                     ),
                     SizedBox(width: 5.w),
-                    const Text('Sign up with Google'),
+                    const Text('Continue with Google'),
                   ],
                 ),
                 // buttonColor: Colors.red, // Custom button color

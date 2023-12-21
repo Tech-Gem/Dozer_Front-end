@@ -53,24 +53,12 @@ class LonginScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // SizedBox(height: 1.h),
-              // Text(
-              //   'Please sign up to get started.',
-              //   style: TextStyle(fontSize: 2.h),
-              // ),
-              // SizedBox(height: 5.h),
-              // CustomTextField(
-              //   controller: nameController,
-              //   hintText: 'Name',
-              //   icon: Icons.person,
-              // ),
-              // SizedBox(height: 1.h),
+
               CustomTextField(
                 controller: phoneNumberController,
-                hintText: 'Phone Number',
+                hintText: 'Email',
                 icon: Icons.phone,
               ),
-              // SizedBox(height: 1.h),
               CustomTextField(
                 controller: passwordController,
                 hintText: 'Password',
@@ -125,7 +113,7 @@ class LonginScreen extends StatelessWidget {
                 },
                 height: 6.h,
                 width: double.infinity,
-                child: Text('Sign up')
+                child: Text('Sign in with Google')
                 // buttonColor: Colors.red, // Custom button color
               ),
             ],
