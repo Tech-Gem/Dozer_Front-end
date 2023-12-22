@@ -1,13 +1,46 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:rideshare/core/utils/colors.dart';
+import 'package:Dozer/core/utils/colors.dart';
+import '../auth/auth.dart';
 import '../widget/rounded_button.dart';
 import '../widget/text_field.dart';
+import 'login_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  String? errorMessage = '';
+  bool isLogin = true;
+
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (route) => false);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        errorMessage = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        errorMessage = 'The account already exists for that email.';
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               // SizedBox(height: 1.h),
               CustomTextField(
-                controller: phoneNumberController,
+                controller: emailController,
                 hintText: 'Email',
                 icon: Icons.email,
               ),
@@ -65,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
               RoundedButton(
                 width: double.infinity,
                 buttonColor: primaryColor,
-                onPressed: () {},
+                onPressed: createUserWithEmailAndPassword,
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
@@ -118,11 +151,40 @@ class SignUpScreen extends StatelessWidget {
                       width: 10.w,
                     ),
                     SizedBox(width: 5.w),
-                    const Text('Continue with Google'),
+                    const Text(
+                      'Continue with Google',
+                      style: TextStyle(color: black),
+                    ),
                   ],
                 ),
+
                 // buttonColor: Colors.red, // Custom button color
               ),
+              SizedBox(
+                height: 1.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Already have an account?"),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                            (route) => false);
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ))
+                ],
+              )
             ],
           ),
         ),
