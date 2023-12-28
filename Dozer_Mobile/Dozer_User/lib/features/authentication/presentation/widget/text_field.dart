@@ -7,12 +7,14 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final bool obscureText;
+  final bool isError;
 
   const CustomTextField({
     required this.controller,
     required this.hintText,
     this.icon,
     this.obscureText = false,
+    this.isError = false,
   });
 
   @override

@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Dozer/core/utils/colors.dart';
 import 'package:Dozer/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:Dozer/features/home.dart';
 import '../auth/auth.dart';
 import '../widget/rounded_button.dart';
 import '../widget/text_field.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,8 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String? errorMessage = '';
+  String? errorMessage;
   bool isLogin = true;
+  bool isEmailError = false;
+  bool isPasswordError = false;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -23,18 +25,32 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
-          email: emailController.text.toString().trim(),
-          password: passwordController.text);
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
       // Navigate to the home page after successful login
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+        (route) => false,
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorMessage = 'No user found for that email.';
+        isEmailError = true;
+        isPasswordError = false;
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'Invalid email address.';
+        isEmailError = true;
+        isPasswordError = false;
       } else if (e.code == 'wrong-password') {
         errorMessage = 'Wrong password provided for that user.';
+        isEmailError = false;
+        isPasswordError = true;
       } else {
-        print(e);
+        errorMessage = 'All fields must be filled.';
+        isEmailError = false;
+        isPasswordError = false;
       }
       // Update the UI to show the error message
       setState(() {});
@@ -43,117 +59,168 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      await Auth().signInWithGoogle();
+
+      // Navigate to the home screen after successful sign-in
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Login',
-          style: TextStyle(fontSize: 4.h, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                controller: emailController,
-                hintText: 'Email',
-                icon: Icons.email,
-              ),
-              CustomTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-                icon: Icons.lock,
-              ),
-              SizedBox(height: 16.h),
-              RoundedButton(
-                width: double.infinity,
-                buttonColor: primaryColor,
-                onPressed: signInWithEmailAndPassword,
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 2.h,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 1.h),
-              Row(
-                children: [
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      height: 1.5,
-                      thickness: 0.3,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(5.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10.h),
+                Center(
+                  child: Text(
+                    'Welcome Back!',
+                    style: TextStyle(
+                      color: greyTextColor,
+                      fontSize: 4.h,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 1.h),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(
-                        fontSize: 2.h,
+                ),
+                SizedBox(height: 6.h),
+                CustomTextField(
+                  controller: emailController,
+                  hintText: 'Email',
+                  icon: Icons.email,
+                ),
+                if (isEmailError)
+                  Text(
+                    errorMessage ?? '',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                CustomTextField(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  icon: Icons.lock,
+                ),
+                if (isPasswordError)
+                  Text(
+                    errorMessage ?? '',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                SizedBox(height: 10.h),
+                if (errorMessage != null &&
+                    errorMessage!.isNotEmpty &&
+                    !isEmailError &&
+                    !isPasswordError)
+                  Text(
+                    errorMessage!,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                RoundedButton(
+                  width: double.infinity,
+                  buttonColor: primary,
+                  onPressed: signInWithEmailAndPassword,
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 2.h,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 1.h),
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 1.5,
+                        thickness: 0.3,
                       ),
                     ),
-                  ),
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      height: 1.5,
-                      thickness: 0.3,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 1.h),
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          fontSize: 2.h,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 1.h),
-              RoundedButton(
-                onPressed: () {
-                  // Handle sign up with Google logic here
-                },
-                height: 6.h,
-                width: double.infinity,
-                child: const Text(
-                  'Continue with Google',
-                  style: TextStyle(color: black),
+                    const Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 1.5,
+                        thickness: 0.3,
+                      ),
+                    ),
+                  ],
                 ),
-
-                // buttonColor: Colors.red, // Custom button color
-              ),
-              SizedBox(height: 1.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Create new account?"),
-                  const SizedBox(
-                    width: 5,
+                SizedBox(height: 1.h),
+                RoundedButton(
+                  onPressed: () {
+                    // Handle sign up with Google logic here
+                    signInWithGoogle(context);
+                  },
+                  height: 6.h,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/google.png',
+                        height: 4.h,
+                        width: 4.h,
+                      ),
+                      const Text(
+                        'Continue with Google',
+                        style: TextStyle(color: black),
+                      ),
+                    ],
                   ),
-                  GestureDetector(
+                ),
+                SizedBox(height: 1.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Create new account?"),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    GestureDetector(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpScreen()),
-                            (route) => false);
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ),
+                          (route) => false,
+                        );
                       },
                       child: const Text(
                         "Sign up",
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              )
-            ],
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
