@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Navigate to the home screen after successful sign-in
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => MyApp()),
       );
     } catch (e) {
       print(e);

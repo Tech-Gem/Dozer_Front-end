@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to the home page after successful login
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => MyApp()),
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to the home screen after successful sign-in
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => MyApp()),
       );
     } catch (e) {
       print(e);
