@@ -33,6 +33,7 @@ class BookingInfo extends StatelessWidget {
             ),
           ),
           // Equipment Details Card
+          SizedBox(height: 20),
           Card(
             elevation: 5.0,
             margin: EdgeInsets.symmetric(horizontal:10.0),
@@ -46,30 +47,33 @@ class BookingInfo extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Equipment Name: Dozer',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Text(
-                        'Amount: \$100/hour',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Text(
-                        'Start Date: 2023-01-01',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Text(
-                        'End Date: 2023-01-10',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Text(
-                        'Expected Starting Time: 10:00 AM',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Equipment Name: Dozer',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        Text(
+                          'Amount: \$100/hour',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        Text(
+                          'Start Date: 2023-01-01',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        Text(
+                          'End Date: 2023-01-10',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        Text(
+                          'Expected Starting Time: 10:00 AM',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:Dozer/core/app_pages.dart';
-import 'package:Dozer/core/utils/colors.dart';
 import 'package:Dozer/features/equipment_list/presentation/screens/home/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,25 +63,46 @@ class _BookingFormPageState extends State<BookingFormPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                  onPressed: () { 
-                    Get.toNamed(AppPages.BOOKINGINFO);
-                   },
-                  child: Container(
-                    margin: const EdgeInsets.all(16),
-                    height: 45,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 253, 188, 51),
-                      borderRadius: BorderRadius.circular(36),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                )
+                Container(
+  margin: const EdgeInsets.all(16),
+  height: 45,
+  width: double.infinity,
+  decoration: BoxDecoration(
+    color: Colors.transparent, // Set the container background color to transparent
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey, // Shadow color
+        spreadRadius: 2, // Spread radius
+        blurRadius: 4, // Blur radius
+        offset: Offset(0, 2), // Offset to give a lift effect
+      ),
+    ],
+    borderRadius: BorderRadius.circular(36),
+  ),
+  child: ElevatedButton(
+    onPressed: () {
+      Get.toNamed(AppPages.BOOKINGINFO);
+    },
+    style: ElevatedButton.styleFrom(
+      primary: const Color.fromARGB(255, 253, 188, 51), // Yellow background color
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(36),
+      ),
+    ),
+    child: Container(
+      alignment: Alignment.center,
+      child: const Text(
+        'Submit',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ),
+)
+
               ],
             ),
           ),
