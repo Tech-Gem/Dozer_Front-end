@@ -1,6 +1,7 @@
+import 'package:Dozer/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:rideshare/core/utils/colors.dart';
+
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -8,7 +9,7 @@ class CustomTextField extends StatelessWidget {
   final IconData? icon;
   final bool obscureText;
 
-  const CustomTextField({
+  CustomTextField({
     required this.controller,
     required this.hintText,
     this.icon,
@@ -17,7 +18,10 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  // Initialize ResponsiveSizer
+
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7.w),
         color: textFieldColor,
