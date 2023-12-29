@@ -19,7 +19,7 @@ class RecommendedHouse extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return DetailScreen( constructionMachine: recommendedList[index],);
+                    return DetailScreen(machine: recommendedList[index],);
                   },
                 ),
               );
