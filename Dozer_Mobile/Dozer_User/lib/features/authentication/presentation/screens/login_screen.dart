@@ -1,11 +1,11 @@
+import 'package:Dozer/features/authentication/presentation/auth/auth_firebase.dart';
+import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
+import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Dozer/core/utils/colors.dart';
 import 'package:Dozer/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:Dozer/features/home.dart';
-import '../auth/auth.dart';
-import '../widget/rounded_button.dart';
-import '../widget/text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to the home page after successful login
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MyApp()),
+        MaterialPageRoute(builder: (context) => Home()),
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to the home screen after successful sign-in
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyApp()),
+        MaterialPageRoute(builder: (context) => Home()),
       );
     } catch (e) {
       print(e);

@@ -1,14 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Dozer/features/authentication/presentation/auth/auth.dart';
+import 'package:Dozer/features/authentication/presentation/screens/otp_verification.dart';
+import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
+import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
+import 'package:Dozer/features/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:Dozer/core/utils/colors.dart';
-import '../auth/auth.dart';
-import '../widget/rounded_button.dart';
-import '../widget/text_field.dart';
 import 'login_screen.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:Dozer/features/home.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -17,22 +15,17 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   String? errorMessage = '';
-  bool isEmailError = false;
-  bool isEmailInUse = false;
-  bool isPasswordWeak = false;
-  bool isPasswordShort = false;
+  bool isFullNameError = false;
+  bool isPhoneNumberError = false;
   bool isLogin = true;
   bool isFieldEmpty = false;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
-  Future<void> createUserWithEmailAndPassword() async {
+  Future<void> signUpWithPhoneNumber() async {
     // Validate input fields
-    if (nameController.text.trim().isEmpty ||
-        emailController.text.trim().isEmpty ||
-        passwordController.text.isEmpty) {
+    if (phoneNumberController.text.trim().isEmpty) {
       errorMessage = 'All fields must be filled.';
       isFieldEmpty = true;
     } else {
@@ -43,36 +36,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {});
       return;
     }
+
     try {
-      await Auth().createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text,
-      );
-      Navigator.pushAndRemoveUntil(
+      // Send OTP to the provided phone number
+      await Auth().sendOtpToPhoneNumber(phoneNumberController.text.trim());
+
+      // Navigate to the OTP verification screen
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-        (route) => false,
+        MaterialPageRoute(
+          builder: (context) => OtpVerificationScreen(
+            phoneNumber: phoneNumberController.text.trim(),
+          ),
+        ),
       );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        errorMessage = 'Password should be at least 6 characters';
-        isPasswordWeak = true; // Reset isEmailError for other types of errors
-      } else if (e.code == 'email-already-in-use') {
-        errorMessage = 'The account already exists for that email.';
-        isEmailInUse = true;
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'Invalid email address.';
-        isEmailError = true;
-      } else {
-        errorMessage = 'An error occurred: ${e.message}';
-        isEmailError = false; // Reset isEmailError for other types of errors
-      }
     } catch (e) {
-      errorMessage = 'An unexpected error occurred.';
-      isEmailError = false; // Reset isEmailError for other types of errors
       print(e);
     }
-    setState(() {});
   }
 
   Future<void> signInWithGoogle(BuildContext context) async {
@@ -81,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Navigate to the home screen after successful sign-in
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyApp()),
+        MaterialPageRoute(builder: (context) => Home()),
       );
     } catch (e) {
       print(e);
@@ -97,17 +77,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: 
-                Image.asset(
+                child: Image.asset(
                   'assets/images/logo.png',
                   width: 40.w,
                   height: 23.h,
                 ),
-                // SvgPicture.asset(
-                //   'assets/images/logo.svg',
-                //   width: 20.w,
-                //   height: 20.h,
-                // ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 17.0),
@@ -126,55 +100,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: TextStyle(fontSize: 2.h),
                     ),
                     SizedBox(height: 1.h),
+                    // CustomTextField(
+                    //   controller: fullNameController,
+                    //   hintText: 'Full Name',
+                    //   icon: Icons.person,
+                    //   isError: isFullNameError,
+                    // ),
+                    // if (isFullNameError)
+                    //   Text(
+                    //     errorMessage ?? '',
+                    //     style: TextStyle(color: Colors.red),
+                    //   ),
                     CustomTextField(
-                      controller: nameController,
-                      hintText: 'Full Name',
-                      icon: Icons.person,
+                      controller: phoneNumberController,
+                      hintText: 'Phone Number',
+                      icon: Icons.phone,
+                      isError: isPhoneNumberError,
                     ),
-                    CustomTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      icon: Icons.email,
-                      isError: isEmailError,
-                    ),
-                    if (isEmailError)
+                    if (isPhoneNumberError)
                       Text(
                         errorMessage ?? '',
                         style: TextStyle(color: Colors.red),
                       ),
-                    if (isEmailInUse)
-                      Text(
-                        errorMessage ?? '',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    CustomTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                      icon: Icons.lock,
-                    ),
-                    if (isPasswordWeak)
-                      Text(
-                        errorMessage ?? '',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    if (isPasswordShort)
-                      Text(
-                        errorMessage ?? '',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    if (isFieldEmpty)
-                      Text(
-                        'All fields must be filled.',
-                        style: TextStyle(color: Colors.red),
-                      ),
+                    // if (isFieldEmpty)
+                    //   Text(
+                    //     'All fields must be filled.',
+                    //     style: TextStyle(color: Colors.red),
+                    //   ),
                     SizedBox(height: 6.h),
                     RoundedButton(
                       width: double.infinity,
                       buttonColor: primary,
-                      onPressed: createUserWithEmailAndPassword,
+                      onPressed: signUpWithPhoneNumber,
                       child: Text(
-                        'Sign Up',
+                        'Send OTP',
                         style: TextStyle(
                           fontSize: 2.h,
                           fontWeight: FontWeight.bold,
@@ -198,7 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(
                               fontSize: 2.h,
                             ),
-                          ),
+                          ) ,
                         ),
                         const Expanded(
                           child: Divider(
