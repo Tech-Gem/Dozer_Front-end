@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:Dozer_owner/core/utils/colors.dart';
+import 'package:dozer_owner/core/utils/colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
