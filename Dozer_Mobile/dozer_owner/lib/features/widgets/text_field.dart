@@ -7,12 +7,16 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final bool obscureText;
+  final Color borderColor;
+  final double borderWidth;
 
   const CustomTextField({
     required this.controller,
     required this.hintText,
     this.icon,
     this.obscureText = false,
+    this.borderColor = Colors.transparent,
+    this.borderWidth = 0.0,
   });
 
   @override
@@ -21,8 +25,12 @@ class CustomTextField extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7.w),
         color: textFieldColor,
+        border: Border.all(
+          color: borderColor,
+          width: borderWidth,
+        ),
       ),
-      margin: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
+      margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
       child: TextField(
         controller: controller,
         obscureText: obscureText,
