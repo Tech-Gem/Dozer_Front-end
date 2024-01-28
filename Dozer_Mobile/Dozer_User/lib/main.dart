@@ -1,9 +1,9 @@
 import 'package:Dozer/core/app_pages.dart';
-import 'package:Dozer/features/equipment_list/presentation/screens/home/home_screen.dart';
+
 import 'package:Dozer/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +12,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return GetMaterialApp(
+    return ResponsiveSizer(
+      builder: (context, orientation, screenType) {
+        return  GetMaterialApp(
           title: 'Flutter Rent House APP',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

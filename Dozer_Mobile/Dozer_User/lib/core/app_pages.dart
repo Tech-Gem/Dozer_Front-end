@@ -1,7 +1,7 @@
-import 'package:Dozer/features/equipment_list/presentation/screens/bid_screen.dart';
-import 'package:Dozer/features/equipment_list/presentation/screens/book/booking_form.dart';
-import 'package:Dozer/features/equipment_list/presentation/screens/book/booking_info.dart';
-import 'package:Dozer/features/equipment_list/presentation/screens/home/home_screen.dart';
+
+import 'package:Dozer/presentation/equipment_list/home_screen.dart';
+
+
 import 'package:get/get.dart';
 
 class AppPages {
@@ -18,25 +18,6 @@ class AppPages {
       page: () => HomeScreen(),
       
     ),
-    GetPage(
-      name: BID,
-      page: () => BidScreen(),
-    ),
-    GetPage(
-      name: ALL_MACHINES,
-      page: () => AllMachinesScreen(),
-    ),
-    GetPage(
-      name: BOOKINGS,
-      page: () => BookingsScreen(),
-    ),
-     GetPage(
-      name: BOOKINGFORM,
-      page: () => BookingFormPage(),
-    ),
-    GetPage(
-      name: BOOKINGINFO,
-      page: () => BookingInfoPage(),
-    ),
+    
   ];
 }

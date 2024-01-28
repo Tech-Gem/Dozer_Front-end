@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';z
+import 'package:flutter/material.dart';
 
 import '../../../../core/utils/colors.dart';
 
