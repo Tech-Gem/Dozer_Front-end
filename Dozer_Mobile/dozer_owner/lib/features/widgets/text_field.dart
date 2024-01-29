@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
           width: borderWidth,
         ),
       ),
-      margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
+      margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
       child: TextField(
         controller: controller,
         obscureText: obscureText,
