@@ -1,5 +1,5 @@
 import 'package:DozerOwner/core/utils/colors.dart';
-import 'package:DozerOwner/features/welcome.dart';
+import 'package:DozerOwner/features/Equipment/presentation/pages/equipment_info_filling_page.dart';
 import 'package:DozerOwner/features/widgets/rounded_button.dart';
 import 'package:DozerOwner/features/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,16 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Padding(
@@ -87,7 +97,7 @@ class SignupPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => WelcomePage(),
+                                builder: (context) => InfoFillingPage(),
                               ),
                             );
                           }),
