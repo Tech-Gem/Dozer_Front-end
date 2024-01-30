@@ -47,9 +47,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void verifyOtp() async {
-    String otp = otpController.text.trim();
+    String code = otpController.text.trim();
 
-    if (otp.isEmpty) {
+    if (code.isEmpty) {
       setState(() {
         isError = true;
         errorMessage = 'Please enter the OTP.';
@@ -59,17 +59,24 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     try {
       // Verify the OTP
-      await Auth().verifyOtp(widget.phoneNumber, otp);
+      bool isOtpValid = await Auth().verifyOtp(widget.phoneNumber, code);
 
-      // Navigate to the home screen after successful OTP verification
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+      if (isOtpValid) {
+        // Navigate to the home screen after successful OTP verification
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      } else {
+        setState(() {
+          isError = true;
+          errorMessage = 'Invalid OTP. Please try again.';
+        });
+      }
     } catch (e) {
       setState(() {
         isError = true;
-        errorMessage = 'Invalid OTP. Please try again.';
+        errorMessage = 'An error occurred. Please try again.';
       });
       print(e);
     }
@@ -107,9 +114,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                children: [
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(children: [
                   Text(
                     'Verify your OTP',
                     style: TextStyle(
@@ -158,53 +164,53 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ),
                       children: [
                         TextSpan(
-                          text: isResendEnabled ? 'Resend now' : 'Resend in $timerValue seconds',
+                          text: isResendEnabled
+                              ? 'Resend now'
+                              : 'Resend in $timerValue seconds',
                           style: TextStyle(
                             fontSize: 16,
                             color: isResendEnabled ? primary : Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          recognizer: TapGestureRecognizer()..onTap = isResendEnabled ? resendOtp : null,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = isResendEnabled ? resendOtp : null,
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Already have an account? ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Log in',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
                           ),
-                        ],
-                      ),
-                    )
-                  )])
-            )
+                        );
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Already have an account? ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Log in',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                ]))
           ],
         ),
       ),
     );
-  } 
+  }
 }
-
-

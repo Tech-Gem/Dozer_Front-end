@@ -9,7 +9,7 @@ class Auth {
   Future<void> sendOtpToPhoneNumber(String phoneNumber) async {
     final url =
         'https://dozer-backend-tech-gem.onrender.com/api/v1/otp/sendOtp';
-    final headers = {'Content-Type': 'application/json'};
+    final headers = {'Content-Type': 'application/json', 'mode': 'no-cors'};
     final body = json.encode({'phoneNumber': phoneNumber});
     final response = await http.post(
       Uri.parse(url),
@@ -18,9 +18,14 @@ class Auth {
     );
     print(phoneNumber);
     print('***************************************');
+    print('bodyyyyyyyy ${body}');
+    print(response.body);
     if (response.statusCode == 200) {
       print('hbkjkuhk');
       print('OTP sent successfully');
+      final responseData = json.decode(response.body);
+      final sentOtp = responseData['response']['code'];
+      print('OTP: $sentOtp');
       // You can navigate to the OTP verification screen
       // and pass the necessary data if needed.
     } else {
@@ -29,25 +34,59 @@ class Auth {
     }
   }
 
-  Future<void> verifyOtp(String phoneNumber, String otp) async {
-    final url =
+  // Future<bool> verifyOtp(String phoneNumber, String code) async {
+  //   const url =
+  //       'https://dozer-backend-tech-gem.onrender.com/api/v1/otp/verifyOtp';
+  //   final headers = {'Content-Type': 'application/json'};
+  //   final body = json.encode({
+  //     'verificationCode': code,
+  //   });
+  //   final response = await http.post(
+  //     Uri.parse(url),
+  //     headers: headers,
+  //     body: body,
+  //   );
+  //   print(response);
+  //   print(body);
+  //   print('verifyyyy8yyyyyyyyyyyyyyyyyyyyyyyy ${body}');
+
+  //   if (response.statusCode == 200) {
+  //     // OTP verification successful
+  //     // You can proceed with the desired action, e.g., sign in the user.
+  //     return true;
+  //   } else {
+  //     // Handle error case
+  //     print('Failed to verify OTP. Status code: ${response.statusCode}');
+  //     return false;
+  //   }
+  // }
+
+  Future<bool> verifyOtp(String phoneNumber, String code) async {
+    const url =
         'https://dozer-backend-tech-gem.onrender.com/api/v1/otp/verifyOtp';
     final headers = {'Content-Type': 'application/json'};
-    final body = json.encode({
-      'code': otp,
-    });
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: body,
-    );
+    final body = json.encode({'code': code});
 
-    if (response.statusCode == 200) {
-      // OTP verification successful
-      // You can proceed with the desired action, e.g., sign in the user.
-    } else {
-      // Handle error case
-      print('Failed to verify OTP. Status code: ${response.statusCode}');
+    try {
+      final response =
+          await http.post(Uri.parse(url), headers: headers, body: body);
+      print(response.body);
+      print('verifyyyy8yyyyyyyyyyyyyyyyyyyyyyyy $body');
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        // Assuming the response contains a "message" indicating successful verification
+        print(jsonResponse['message']);
+        return true;
+      } else {
+        // Handle error case
+        print('Failed to verify OTP. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (error) {
+      // Handle any exceptions that occur during the request
+      print('An error occurred during OTP verification: $error');
+      return false;
     }
   }
 

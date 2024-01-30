@@ -1,4 +1,4 @@
-import 'package:Dozer/features/authentication/presentation/auth/auth_firebase.dart';
+import 'package:Dozer/features/authentication/presentation/auth/auth.dart';
 import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
 import 'package:flutter/material.dart';
@@ -22,42 +22,42 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text,
-      );
-      // Navigate to the home page after successful login
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-        (route) => false,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        errorMessage = 'No user found for that email.';
-        isEmailError = true;
-        isPasswordError = false;
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'Invalid email address.';
-        isEmailError = true;
-        isPasswordError = false;
-      } else if (e.code == 'wrong-password') {
-        errorMessage = 'Wrong password provided for that user.';
-        isEmailError = false;
-        isPasswordError = true;
-      } else {
-        errorMessage = 'All fields must be filled.';
-        isEmailError = false;
-        isPasswordError = false;
-      }
-      // Update the UI to show the error message
-      setState(() {});
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> signInWithEmailAndPassword() async {
+  //   try {
+  //     await Auth().(
+  //       email: emailController.text.trim(),
+  //       password: passwordController.text,
+  //     );
+  //     // Navigate to the home page after successful login
+  //     Navigator.pushAndRemoveUntil(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => Home()),
+  //       (route) => false,
+  //     );
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       errorMessage = 'No user found for that email.';
+  //       isEmailError = true;
+  //       isPasswordError = false;
+  //     } else if (e.code == 'invalid-email') {
+  //       errorMessage = 'Invalid email address.';
+  //       isEmailError = true;
+  //       isPasswordError = false;
+  //     } else if (e.code == 'wrong-password') {
+  //       errorMessage = 'Wrong password provided for that user.';
+  //       isEmailError = false;
+  //       isPasswordError = true;
+  //     } else {
+  //       errorMessage = 'All fields must be filled.';
+  //       isEmailError = false;
+  //       isPasswordError = false;
+  //     }
+  //     // Update the UI to show the error message
+  //     setState(() {});
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
@@ -128,18 +128,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 14.0,
                     ),
                   ),
-                RoundedButton(
-                  width: double.infinity,
-                  buttonColor: primary,
-                  onPressed: signInWithEmailAndPassword,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 2.h,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                // RoundedButton(
+                //   width: double.infinity,
+                //   buttonColor: primary,
+                //   onPressed: signInWithEmailAndPassword,
+                //   child: Text(
+                //     'Login',
+                //     style: TextStyle(
+                //       fontSize: 2.h,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: 1.h),
                 Row(
                   children: [
