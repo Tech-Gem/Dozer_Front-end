@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';z
+import 'package:flutter/material.dart';
 
 import '../../../../core/utils/colors.dart';
 
@@ -8,13 +8,18 @@ class RoundedButton extends StatelessWidget {
   final double height;
   final double width;
   final Color buttonColor;
+  final Color borderColor;
+  final double borderWidth;
 
   const RoundedButton({
     required this.child,
     required this.onPressed,
     this.height = 50.0, // Default height
     this.width = 120.0, // Default width
-    this.buttonColor = modalBackgroundColor, // Default color
+    this.buttonColor = modalBackgroundColor,
+    this.borderColor = Colors.transparent,
+    this.borderWidth = 0.0,
+    // Default color
   });
 
   @override
@@ -25,6 +30,10 @@ class RoundedButton extends StatelessWidget {
         backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(height / 2),
+          side: BorderSide(
+            color: borderColor,
+            width: borderWidth,
+          ),
         ),
       ),
       child: Container(
