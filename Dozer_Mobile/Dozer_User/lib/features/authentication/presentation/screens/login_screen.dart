@@ -1,4 +1,4 @@
-import 'package:Dozer/features/authentication/presentation/auth/auth.dart';
+import 'package:Dozer/features/authentication/auth/auth.dart';
 import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
 import 'package:flutter/material.dart';
@@ -212,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         "Sign up",
                         style: TextStyle(
-                          color: primary,
+                          color: primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

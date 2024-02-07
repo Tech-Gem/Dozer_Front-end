@@ -23,7 +23,15 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Dozer App',
           theme: ThemeData(
-            // primarySwatch: primaryColor,
+            colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+            useMaterial3: true,
+            textTheme: const TextTheme(
+              bodyLarge: TextStyle(),
+              bodyMedium: TextStyle(),
+            ).apply(
+              bodyColor: greyTextColor,
+              displayColor: greyTextColor2,
+            ),
           ),
           home: SignUpScreen(),
         );

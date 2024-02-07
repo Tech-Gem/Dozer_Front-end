@@ -1,4 +1,5 @@
-import 'package:Dozer/features/authentication/presentation/auth/auth.dart';
+import 'package:Dozer/features/Equipment/presentation/pages/equipment_info_filling_page.dart';
+import 'package:Dozer/features/authentication/auth/auth.dart';
 import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
 import 'package:Dozer/features/home.dart';
@@ -9,8 +10,9 @@ import 'login_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String phoneNumber;
+  final String? otpCode;
 
-  OtpVerificationScreen({required this.phoneNumber});
+  OtpVerificationScreen({required this.phoneNumber, required this.otpCode});
 
   @override
   _OtpVerificationScreenState createState() => _OtpVerificationScreenState();
@@ -59,13 +61,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     try {
       // Verify the OTP
-      bool isOtpValid = await Auth().verifyOtp(widget.phoneNumber, code);
+
+      bool isOtpValid =
+          await Auth().verifyOtp(widget.phoneNumber, code, widget.otpCode!);
+      print(widget.phoneNumber);
+      print(code);
 
       if (isOtpValid) {
         // Navigate to the home screen after successful OTP verification
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => InfoFillingPage()),
         );
       } else {
         setState(() {
@@ -101,114 +107,118 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: 200,
-                height: 200,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 200,
+                  height: 200,
+                ),
               ),
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Column(children: [
-                  Text(
-                    'Verify your OTP',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Please enter the OTP sent to ${widget.phoneNumber}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 20),
-                  CustomTextField(
-                    controller: otpController,
-                    hintText: 'OTP',
-                    icon: Icons.lock,
-                    isError: isError,
-                  ),
-                  if (isError)
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(children: [
                     Text(
-                      errorMessage ?? '',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  SizedBox(height: 40),
-                  // CustomTextField(controller: controller, hintText: 'Full name')
-                  RoundedButton(
-                    width: double.infinity,
-                    buttonColor: primary,
-                    onPressed: verifyOtp,
-                    child: Text(
-                      'Verify',
+                      'Verify your OTP',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Didn\'t receive the OTP? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: isResendEnabled
-                              ? 'Resend now'
-                              : 'Resend in $timerValue seconds',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: isResendEnabled ? primary : Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = isResendEnabled ? resendOtp : null,
-                        ),
-                      ],
+                    SizedBox(height: 20),
+                    Text(
+                      'Please enter the OTP sent to ${widget.phoneNumber}',
+                      style: TextStyle(fontSize: 16),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Already have an account? ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Log in',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                    SizedBox(height: 20),
+                    CustomTextField(
+                      controller: otpController,
+                      hintText: 'OTP',
+                      icon: Icons.lock,
+                      isError: isError,
+                    ),
+                    if (isError)
+                      Text(
+                        errorMessage ?? '',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    SizedBox(height: 40),
+                    // CustomTextField(controller: controller, hintText: 'Full name')
+                    RoundedButton(
+                      width: double.infinity,
+                      buttonColor: primaryColor,
+                      onPressed: verifyOtp,
+                      child: Text(
+                        'Verify',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      ))
-                ]))
-          ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Didn\'t receive the OTP? ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: isResendEnabled
+                                ? 'Resend now'
+                                : 'Resend in $timerValue seconds',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color:
+                                  isResendEnabled ? primaryColor : Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = isResendEnabled ? resendOtp : null,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Log in',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                  ]))
+            ],
+          ),
         ),
       ),
     );

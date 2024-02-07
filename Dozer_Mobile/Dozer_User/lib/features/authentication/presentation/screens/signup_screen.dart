@@ -1,4 +1,4 @@
-import 'package:Dozer/features/authentication/presentation/auth/auth.dart';
+import 'package:Dozer/features/authentication/auth/auth.dart';
 import 'package:Dozer/features/authentication/presentation/screens/otp_verification.dart';
 import 'package:Dozer/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:Dozer/features/authentication/presentation/widget/text_field.dart';
@@ -39,7 +39,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       // Send OTP to the provided phone number
-      await Auth().sendOtpToPhoneNumber(phoneNumberController.text.trim());
+      final otpCode =
+          await Auth().sendOtpToPhoneNumber(phoneNumberController.text.trim());
 
       // Navigate to the OTP verification screen
       Navigator.push(
@@ -47,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         MaterialPageRoute(
           builder: (context) => OtpVerificationScreen(
             phoneNumber: phoneNumberController.text.trim(),
+            otpCode: otpCode,
           ),
         ),
       );
@@ -130,14 +132,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(height: 6.h),
                     RoundedButton(
                       width: double.infinity,
-                      buttonColor: primary,
+                      buttonColor: primaryColor,
                       onPressed: signUpWithPhoneNumber,
                       child: Text(
                         'Send OTP',
                         style: TextStyle(
-                          fontSize: 2.h,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 2.h,
+                            fontWeight: FontWeight.bold,
+                            color: white),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -157,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(
                               fontSize: 2.h,
                             ),
-                          ) ,
+                          ),
                         ),
                         const Expanded(
                           child: Divider(
@@ -215,7 +217,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             "Login",
                             style: TextStyle(
-                              color: primary,
+                              color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
