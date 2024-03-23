@@ -1,43 +1,58 @@
+import 'package:dozer_owner/core/routes/app_route.dart';
 import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/authentication/authentication/presentation/screens/signup_screen.dart';
+import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'firebase_options.dart';
+import 'package:dozer_owner/features/dependency_injection/dependency_injection_container.dart'
+    as di;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await di.initDepInj();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final appRoute = AppRoute();
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(
-      builder: (context, orientation, screenType) {
-        return MaterialApp(
+    return ScreenUtilInit(
+      designSize: const Size(360, 800),
+      splitScreenMode: true,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => di.sl<ProfileBloc>(),
+          ),
+        ],
+        child: MaterialApp.router(
+          routerConfig: appRoute.router,
           debugShowCheckedModeBanner: false,
-          title: 'Dozer App',
+          title: 'RideShare',
           theme: ThemeData(
+            fontFamily: 'poppins',
             colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
             useMaterial3: true,
             textTheme: const TextTheme(
               bodyLarge: TextStyle(),
               bodyMedium: TextStyle(),
             ).apply(
-              bodyColor: greyTextColor,
-              displayColor: greyTextColor2,
+              bodyColor: primaryColor,
+              displayColor: greyTextColor,
             ),
+            scaffoldBackgroundColor: Colors.white,
           ),
-          home: SignUpScreen(),
-        );
-      },
+        ),
+      ),
     );
   }
 }
