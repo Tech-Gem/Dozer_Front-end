@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:dozer_owner/constants/constants.dart';
-import 'package:dozer_owner/core/errors/exceptions.dart';
-import 'package:dozer_owner/features/owner_profile/data/models/user_model.dart';
+import 'package:DozerOwner/constants/constants.dart';
+import 'package:DozerOwner/core/errors/exceptions.dart';
+import 'package:DozerOwner/features/owner_profile/data/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserLocalDataSource {

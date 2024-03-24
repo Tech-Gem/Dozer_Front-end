@@ -1,12 +1,12 @@
+import 'package:DozerOwner/constants/constants.dart';
+import 'package:DozerOwner/core/errors/exceptions.dart';
+import 'package:DozerOwner/core/errors/failures.dart';
+import 'package:DozerOwner/core/network/network_info.dart';
+import 'package:DozerOwner/features/owner_profile/data/datasources/owner_local_datasource.dart';
+import 'package:DozerOwner/features/owner_profile/data/datasources/owner_remote_datasource.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
+import 'package:DozerOwner/features/owner_profile/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dozer_owner/constants/constants.dart';
-import 'package:dozer_owner/core/errors/exceptions.dart';
-import 'package:dozer_owner/core/errors/failures.dart';
-import 'package:dozer_owner/core/network/network_info.dart';
-import 'package:dozer_owner/features/owner_profile/data/datasources/owner_local_datasource.dart';
-import 'package:dozer_owner/features/owner_profile/data/datasources/owner_remote_datasource.dart';
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
-import 'package:dozer_owner/features/owner_profile/domain/repositories/user_repository.dart';
 
 
 class UserRepositoryImpl implements UserRepository {

@@ -1,10 +1,8 @@
-import 'package:dozer_owner/core/routes/app_route.dart';
-import 'package:dozer_owner/core/routes/route_names.dart';
-import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_bloc.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_event.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_state.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/widgets/title_bar.dart';
+import 'package:DozerOwner/core/routes/route_names.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/blocs/profile_bloc.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/blocs/profile_event.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/blocs/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

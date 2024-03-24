@@ -1,8 +1,8 @@
-import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/authentication/auth/auth.dart';
-import 'package:dozer_owner/features/authentication/presentation/widget/rounded_button.dart';
-import 'package:dozer_owner/features/authentication/presentation/widget/text_field.dart';
-import 'package:dozer_owner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
+import 'package:DozerOwner/features/authentication/auth/auth.dart';
+import 'package:DozerOwner/features/authentication/presentation/widget/rounded_button.dart';
+import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
+import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';

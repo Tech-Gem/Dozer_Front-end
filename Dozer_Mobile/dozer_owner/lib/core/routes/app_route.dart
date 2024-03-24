@@ -1,5 +1,5 @@
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/screens/profile_page.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

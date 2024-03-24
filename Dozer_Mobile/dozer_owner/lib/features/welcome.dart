@@ -3,7 +3,7 @@ import 'package:DozerOwner/features/authentication/presentation/pages/login_page
 import 'package:DozerOwner/features/authentication/presentation/pages/signup_page.dart';
 import 'package:DozerOwner/features/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WelcomePage extends StatelessWidget {
   @override

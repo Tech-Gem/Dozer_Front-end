@@ -1,5 +1,5 @@
-import 'package:dozer_owner/core/errors/failures.dart';
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
+import 'package:DozerOwner/core/errors/failures.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dozer_owner/features/equipment/data/models/equipment_model.dart';
+import 'package:DozerOwner/features/equipment/data/models/equipment_model.dart';
 import 'package:http/http.dart' as http;
 
 class EquipmentRemoteDataSource {

@@ -1,4 +1,5 @@
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
+
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({

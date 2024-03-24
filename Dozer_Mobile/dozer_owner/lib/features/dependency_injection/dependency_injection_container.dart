@@ -1,5 +1,5 @@
-import 'package:dozer_owner/core/network/network_info.dart';
-import 'package:dozer_owner/features/dependency_injection/profile_injection.dart';
+import 'package:DozerOwner/core/network/network_info.dart';
+import 'package:DozerOwner/features/dependency_injection/profile_injection.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';

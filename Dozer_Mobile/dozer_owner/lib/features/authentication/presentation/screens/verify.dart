@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dozer_owner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
+import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
