@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "305899872534",
+    "project_id": "fir-auth-3832b",
+    "storage_bucket": "fir-auth-3832b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305899872534:android:619fcffc4fe965d410b037",
+        "android_client_info": {
+          "package_name": "com.example.dozer_owner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305899872534-85srcblke13iu1j6b6f6ibsj5peqsaql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqQb4PV_fGWdjnSBvdD4MCuQ90O-JVvcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305899872534-85srcblke13iu1j6b6f6ibsj5peqsaql.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "305899872534-0nonj3v1vrjog2idfi5ne85jg5ukru28.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dozerOwner"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305899872534:android:b2373a8f231e415410b037",
+        "android_client_info": {
+          "package_name": "com.example.project1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305899872534-1tul7c7an3n8c5164ph3thtmunruba79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project1",
+            "certificate_hash": "a6e0c9ec37e7eed64bae34d4600adb0e0e20312e"
+          }
+        },
+        {
+          "client_id": "305899872534-85srcblke13iu1j6b6f6ibsj5peqsaql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqQb4PV_fGWdjnSBvdD4MCuQ90O-JVvcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305899872534-85srcblke13iu1j6b6f6ibsj5peqsaql.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "305899872534-0nonj3v1vrjog2idfi5ne85jg5ukru28.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dozerOwner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

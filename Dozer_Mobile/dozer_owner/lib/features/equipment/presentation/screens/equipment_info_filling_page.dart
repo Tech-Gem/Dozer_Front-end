@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:dozer_owner/core/routes/app_route.dart';
+import 'package:dozer_owner/core/routes/route_names.dart';
 import 'package:dozer_owner/core/utils/colors.dart';
 import 'package:dozer_owner/core/validation/validation.dart';
 import 'package:dozer_owner/features/equipment/data/datasources/equipment_remote_datasource.dart';
@@ -7,7 +9,10 @@ import 'package:dozer_owner/features/equipment/presentation/screens/confirm_page
 import 'package:dozer_owner/features/equipment/presentation/screens/review_equipment_page.dart';
 import 'package:dozer_owner/features/equipment/presentation/widgets/drop_down.dart';
 import 'package:dozer_owner/features/equipment/presentation/widgets/text_field.dart';
+import 'package:dozer_owner/features/owner_profile/presentation/screens/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -16,7 +21,6 @@ import 'package:http/http.dart' as http;
 // import 'package:cloudinary_flutter/cloudinary_context.dart';
 // import 'package:cloudinary_flutter/image/cld_image.dart';
 // import 'package:cloudinary_url_gen/cloudinary.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class InfoFillingPage extends StatefulWidget {
   @override
@@ -98,6 +102,28 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
           appBar: AppBar(
             title: Text('Form Page', style: TextStyle(color: Colors.white)),
             backgroundColor: primaryColor,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  context.go('/${AppRoutes.profile}');
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ProfilePage(),
+                  //   ),
+                  // );
+                },
+                child: CircleAvatar(
+                  // Display user profile image
+                  backgroundImage: NetworkImage(
+                      'https://picsum.photos/250?image=9'),
+                  radius: 15,
+                ),
+              ),
+              SizedBox(
+                  width:
+                      10), // Add some spacing between the image and the title
+            ],
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -137,7 +163,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                         setState(() {
                           _isValid = value != null && value.isNotEmpty;
                         });
-                        return InputValidator.validateName(value);
+                        return Validator.validateName(value);
                       },
                     ),
                     Padding(
@@ -154,7 +180,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: quantityController,
                       hintText: 'Quantity',
                       icon: Icons.format_list_numbered,
-                      validator: InputValidator.validateQuantity,
+                      validator: Validator.validateQuantity,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 60.w),
@@ -170,7 +196,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: priceController,
                       hintText: 'Price per hour',
                       icon: Icons.attach_money,
-                      validator: InputValidator.validatePrice,
+                      validator: Validator.validatePrice,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 68.w),
@@ -186,7 +212,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: locationController,
                       hintText: 'Location',
                       icon: Icons.location_on,
-                      validator: InputValidator.validateLocation,
+                      validator: Validator.validateLocation,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 67.w),
@@ -202,7 +228,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: descriptionController,
                       hintText: 'Description',
                       icon: Icons.description,
-                      validator: InputValidator.validateDescription,
+                      validator: Validator.validateDescription,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 68.w),
@@ -218,7 +244,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: categoryController,
                       hintText: 'Category',
                       icon: Icons.category,
-                      validator: InputValidator.validateCategory,
+                      validator: Validator.validateCategory,
                       dropdownValues: {
                         'CompactEquipment': 'CompactEquipment',
                         'HeavyEarthmoving': 'HeavyEarthmoving',
@@ -268,7 +294,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: capacityController,
                       hintText: 'Capacity',
                       icon: Icons.people,
-                      validator: InputValidator.validateCapacity,
+                      validator: Validator.validateCapacity,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 74.w),
@@ -284,7 +310,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: modelController,
                       hintText: 'Model',
                       icon: Icons.model_training,
-                      validator: InputValidator.validateModel,
+                      validator: Validator.validateModel,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 65.w),
@@ -300,7 +326,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: specificationsController,
                       hintText: 'Specifications',
                       icon: Icons.settings,
-                      validator: InputValidator.validateSpecifications,
+                      validator: Validator.validateSpecifications,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 65.w),
@@ -316,7 +342,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       controller: transportationController,
                       hintText: 'Transportation',
                       icon: Icons.directions_car,
-                      validator: InputValidator.validateTransportation,
+                      validator: Validator.validateTransportation,
                     ),
                     SizedBox(height: 24.0),
                     ElevatedButton(

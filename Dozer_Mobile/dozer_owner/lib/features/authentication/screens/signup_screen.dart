@@ -1,11 +1,11 @@
 import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/authentication/authentication/auth/auth.dart';
-import 'package:dozer_owner/features/authentication/authentication/presentation/screens/otp_verification.dart';
-import 'package:dozer_owner/features/authentication/authentication/presentation/widget/rounded_button.dart';
-import 'package:dozer_owner/features/authentication/authentication/presentation/widget/text_field.dart';
+import 'package:dozer_owner/features/authentication/auth/auth.dart';
+import 'package:dozer_owner/features/authentication/presentation/screens/otp_verification.dart';
+import 'package:dozer_owner/features/authentication/presentation/widget/rounded_button.dart';
+import 'package:dozer_owner/features/authentication/presentation/widget/text_field.dart';
 import 'package:dozer_owner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {

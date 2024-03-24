@@ -1,7 +1,7 @@
 
 import 'package:dozer_owner/features/equipment/presentation/screens/confirm_page.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewDialog extends StatefulWidget {
   final String title;

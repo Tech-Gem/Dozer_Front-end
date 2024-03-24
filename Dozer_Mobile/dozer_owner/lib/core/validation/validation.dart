@@ -1,6 +1,6 @@
 import 'dart:io';
 
-class InputValidator {
+class Validator {
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Name is required';
@@ -113,6 +113,46 @@ class InputValidator {
       return 'Category image is required';
     }
 
+    return null;
+  }
+
+  static String? validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required';
+    }
+
+    // Define the regular expression pattern
+    const phonePattern = r'^\d{10}$';
+
+    // Create a regular expression object
+    final regExp = RegExp(phonePattern);
+
+    // Check if the value matches the pattern
+    if (!regExp.hasMatch(value)) {
+      return 'Invalid phone number format';
+    }
+
+    // Return null if the value is valid
+    return null;
+  }
+
+  static String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+
+    // Define the regular expression pattern
+    const emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$';
+
+    // Create a regular expression object
+    final regExp = RegExp(emailPattern);
+
+    // Check if the value matches the pattern
+    if (!regExp.hasMatch(value)) {
+      return 'Invalid email format';
+    }
+
+    // Return null if the value is valid
     return null;
   }
 }
