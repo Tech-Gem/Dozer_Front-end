@@ -88,6 +88,14 @@ class Validator {
     return null;
   }
 
+  static String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+
+    return null;
+  }
+
   static String? validateDescription(String? value) {
     if (value == null || value.isEmpty) {
       return 'Description is required';

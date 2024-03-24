@@ -106,17 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                 CustomTextField(
-                  controller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                  icon: Icons.lock,
-                  validator: Validator.(value) {
-                    if (value.isEmpty) {
-                      return 'Password cannot be empty';
-                    }
-                    return null;
-                  }
-                ),
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                    icon: Icons.lock,
+                    validator: Validator.validatePassword),
                 if (isPasswordError)
                   Text(
                     errorMessage ?? '',
