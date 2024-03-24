@@ -1,4 +1,4 @@
-import 'package:dozer_owner/features/owner_profile/data/models/user_model.dart';
+import 'package:DozerOwner/features/owner_profile/data/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {

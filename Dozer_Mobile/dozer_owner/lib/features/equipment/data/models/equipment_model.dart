@@ -1,6 +1,5 @@
 
-
-import 'package:dozer_owner/features/equipment/domain/entities/equipment_entity.dart';
+import 'package:DozerOwner/features/equipment/domain/entities/equipment_entity.dart';
 
 class EquipmentModel {
   final String name;

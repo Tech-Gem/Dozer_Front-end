@@ -1,4 +1,4 @@
-import 'package:dozer_owner/core/utils/colors.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,13 +8,16 @@ class CustomTextField extends StatelessWidget {
   final IconData? icon;
   final bool obscureText;
   final bool isError;
+  final String? Function(String?)?  validator;
 
   const CustomTextField({
     required this.controller,
     required this.hintText,
     this.icon,
     this.obscureText = false,
-    this.isError = false,
+    this.isError = false, 
+    this.validator
+    
   });
 
   @override

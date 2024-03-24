@@ -1,5 +1,5 @@
+import 'package:DozerOwner/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dozer_owner/core/errors/failures.dart';
 import 'package:equatable/equatable.dart';
 
 

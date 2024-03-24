@@ -1,6 +1,6 @@
+import 'package:DozerOwner/core/errors/failures.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dozer_owner/core/errors/failures.dart';
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getUser();

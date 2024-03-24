@@ -1,6 +1,6 @@
-import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/widgets/content_box.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/widgets/edit_field.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/widgets/content_box.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/widgets/edit_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

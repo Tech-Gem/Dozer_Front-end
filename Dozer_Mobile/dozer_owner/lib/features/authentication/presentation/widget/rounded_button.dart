@@ -1,4 +1,4 @@
-import 'package:dozer_owner/core/utils/colors.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {

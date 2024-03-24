@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_bloc.dart';
-import 'package:dozer_owner/features/owner_profile/presentation/blocs/profile_event.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/blocs/profile_bloc.dart';
+import 'package:DozerOwner/features/owner_profile/presentation/blocs/profile_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';

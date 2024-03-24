@@ -1,8 +1,8 @@
+import 'package:DozerOwner/core/errors/failures.dart';
+import 'package:DozerOwner/core/usecases/usecase.dart';
+import 'package:DozerOwner/features/owner_profile/domain/entities/user_entity.dart';
+import 'package:DozerOwner/features/owner_profile/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dozer_owner/core/errors/failures.dart';
-import 'package:dozer_owner/core/usecases/usecase.dart';
-import 'package:dozer_owner/features/owner_profile/domain/entities/user_entity.dart';
-import 'package:dozer_owner/features/owner_profile/domain/repositories/user_repository.dart';
 
 class GetUser implements UseCase<UserEntity, NoParams> {
   final UserRepository repository;

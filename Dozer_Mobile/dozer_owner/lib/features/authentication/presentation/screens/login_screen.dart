@@ -1,11 +1,11 @@
-import 'package:dozer_owner/core/utils/colors.dart';
-import 'package:dozer_owner/features/authentication/auth/auth.dart';
-import 'package:dozer_owner/features/authentication/presentation/screens/signup_screen.dart';
-import 'package:dozer_owner/features/authentication/presentation/widget/rounded_button.dart';
-import 'package:dozer_owner/features/authentication/presentation/widget/text_field.dart';
-import 'package:dozer_owner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
+import 'package:DozerOwner/core/utils/colors.dart';
+import 'package:DozerOwner/core/validation/validation.dart';
+import 'package:DozerOwner/features/authentication/auth/auth.dart';
+import 'package:DozerOwner/features/authentication/presentation/screens/signup_screen.dart';
+import 'package:DozerOwner/features/authentication/presentation/widget/rounded_button.dart';
+import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
+import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -110,6 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: 'Password',
                   obscureText: true,
                   icon: Icons.lock,
+                  validator: Validator.(value) {
+                    if (value.isEmpty) {
+                      return 'Password cannot be empty';
+                    }
+                    return null;
+                  }
                 ),
                 if (isPasswordError)
                   Text(
@@ -123,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     !isPasswordError)
                   Text(
                     errorMessage!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14.0,
                     ),
