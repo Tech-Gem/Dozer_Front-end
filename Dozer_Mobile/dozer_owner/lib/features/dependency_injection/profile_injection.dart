@@ -12,14 +12,33 @@ GetIt sl = GetIt.instance;
 
 Future<void> profileInj() async {
   //! Blocs
-  sl.registerFactory(() => ProfileBloc(editUserProfile: sl(), getUser: sl()));
+  sl.registerFactory(
+    () => ProfileBloc(
+      editUserProfile: sl(),
+      getUser: sl(),
+    ),
+  );
 
   //! Use cases
-  sl.registerLazySingleton(() => GetUser(repository: sl()));
-  sl.registerLazySingleton(() => EditUserProfile(repository: sl()));
+  sl.registerLazySingleton(
+    () => GetUser(
+      repository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => EditUserProfile(
+      repository: sl(),
+    ),
+  );
 
   //! Repository
-  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
+  sl.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
   //! Data sources
   sl.registerLazySingleton<UserRemoteDataSource>(
@@ -36,7 +55,7 @@ Future<void> profileInj() async {
   sl.registerLazySingleton<http.MultipartRequest>(
     () => http.MultipartRequest(
       'POST',
-      Uri.parse('your_api_endpoint'),
+      Uri.parse('api_endpoint'),
     ),
   );
 }

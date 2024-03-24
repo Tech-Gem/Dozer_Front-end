@@ -1,15 +1,16 @@
+import 'package:DozerOwner/core/routes/route_names.dart';
 import 'package:DozerOwner/core/utils/colors.dart';
 import 'package:DozerOwner/core/validation/validation.dart';
 import 'package:DozerOwner/features/authentication/auth/auth.dart';
-import 'package:DozerOwner/features/authentication/presentation/screens/otp_verification.dart';
 import 'package:DozerOwner/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
-import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'login_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
@@ -43,16 +44,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final otpCode =
           await Auth().sendOtpToPhoneNumber(phoneNumberController.text.trim());
 
-      // Navigate to the OTP verification screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OtpVerificationScreen(
-            phoneNumber: phoneNumberController.text.trim(),
-            otpCode: otpCode,
-          ),
-        ),
-      );
+      // ignore: use_build_context_synchronously
+      context.go(
+          '/${AppRoutes.otpVerfication}?phoneNumber=${phoneNumberController.text.trim()}&otpCode=$otpCode');
     } catch (e) {
       print(e);
     }
@@ -61,11 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       await Auth().signInWithGoogle();
-      // Navigate to the home screen after successful sign-in
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => InfoFillingPage()),
-      );
+      context.go('/${AppRoutes.form}');
     } catch (e) {
       print(e);
     }
@@ -82,8 +72,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                 child: Image.asset(
                   'assets/images/logo.jpg',
-                  width: 40.w,
-                  height: 23.h,
+                  width: 200.w,
+                  height: 200.h,
                 ),
               ),
               Padding(
@@ -93,27 +83,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       'Welcome to our app!',
                       style: TextStyle(
-                        fontSize: 3.5.h,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 10.h),
                     Text(
-                      'Please sign up to get started.',
-                      style: TextStyle(fontSize: 2.h),
+                      'Create your Dozer account as a construction materilal owner',
+                      style: TextStyle(
+                        fontSize:
+                            14.sp, // Responsive font size based on screen width
+                        color: greyTextColor,
+                      ),
                     ),
-                    SizedBox(height: 1.h),
-                    // CustomTextField(
-                    //   controller: fullNameController,
-                    //   hintText: 'Full Name',
-                    //   icon: Icons.person,
-                    //   isError: isFullNameError,
-                    // ),
-                    // if (isFullNameError)
-                    //   Text(
-                    //     errorMessage ?? '',
-                    //     style: TextStyle(color: Colors.red),
-                    //   ),
+                    SizedBox(height: 20.h),
+                    CustomTextField(
+                      controller: fullNameController,
+                      hintText: 'Full Name',
+                      icon: Icons.person,
+                      isError: isFullNameError,
+                    ),
+                    if (isFullNameError)
+                      Text(
+                        errorMessage ?? '',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    SizedBox(height: 15.h),
                     CustomTextField(
                       controller: phoneNumberController,
                       hintText: 'Phone Number',
@@ -124,14 +119,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (isPhoneNumberError)
                       Text(
                         errorMessage ?? '',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    if (isFieldEmpty)
+                      const Text(
+                        'All fields must be filled.',
                         style: TextStyle(color: Colors.red),
                       ),
-                    // if (isFieldEmpty)
-                    //   Text(
-                    //     'All fields must be filled.',
-                    //     style: TextStyle(color: Colors.red),
-                    //   ),
-                    SizedBox(height: 6.h),
+                    SizedBox(height: 150.h),
                     RoundedButton(
                       width: double.infinity,
                       buttonColor: primaryColor,
@@ -139,12 +134,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Text(
                         'Send OTP',
                         style: TextStyle(
-                            fontSize: 2.h,
+                            fontSize: 14.h,
                             fontWeight: FontWeight.bold,
                             color: white),
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 30.h),
                     Row(
                       children: [
                         const Expanded(
@@ -159,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'OR',
                             style: TextStyle(
-                              fontSize: 2.h,
+                              fontSize: 14.h,
                             ),
                           ),
                         ),
@@ -172,51 +167,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 20.h),
                     RoundedButton(
                       onPressed: () {
-                        // Handle sign up with Google logic here
                         Auth().signInWithGoogle();
                       },
-                      height: 6.h,
+                      height: 50.h,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             'assets/images/google.png',
-                            height: 10.h,
-                            width: 10.w,
+                            height: 45.h,
+                            width: 45.w,
                           ),
                           SizedBox(width: 5.w),
-                          const Text(
+                           Text(
                             'Continue with Google',
-                            style: TextStyle(color: black),
+                            style: TextStyle(color: black, fontSize: 14.sp),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 1.h,
+                      height: 20.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?"),
-                        SizedBox(
+                        const Text("Already have an account?"),
+                        const SizedBox(
                           width: 5,
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
-                              ),
-                              (route) => false,
-                            );
+                            context.go('/${AppRoutes.login}');
                           },
-                          child: Text(
+                          child: const Text(
                             "Login",
                             style: TextStyle(
                               color: primaryColor,

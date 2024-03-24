@@ -5,10 +5,11 @@ import 'package:DozerOwner/features/authentication/presentation/widget/rounded_b
 import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
 import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (isEmailError)
                   Text(
                     errorMessage ?? '',
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
                 CustomTextField(
                   controller: passwordController,
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (isPasswordError)
                   Text(
                     errorMessage ?? '',
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
                 SizedBox(height: 10.h),
                 if (errorMessage != null &&
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     !isPasswordError)
                   Text(
                     errorMessage!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14.0,
                     ),
@@ -204,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
+                            builder: (context) => const SignUpScreen(),
                           ),
                           (route) => false,
                         );
