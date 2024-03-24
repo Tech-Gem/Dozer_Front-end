@@ -1,5 +1,6 @@
 import 'package:DozerOwner/core/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoundedButton extends StatelessWidget {
   final Widget child;
@@ -8,7 +9,7 @@ class RoundedButton extends StatelessWidget {
   final double width;
   final Color buttonColor;
 
-  const RoundedButton({
+  RoundedButton({
     required this.child,
     required this.onPressed,
     this.height = 50.0, // Default height
@@ -23,7 +24,7 @@ class RoundedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(height / 2),
+          borderRadius: BorderRadius.circular(10.r),
         ),
       ),
       child: Container(

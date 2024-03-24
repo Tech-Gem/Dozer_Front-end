@@ -1,73 +1,59 @@
+import 'package:DozerOwner/core/routes/route_names.dart';
 import 'package:DozerOwner/core/utils/colors.dart';
 import 'package:DozerOwner/core/validation/validation.dart';
 import 'package:DozerOwner/features/authentication/auth/auth.dart';
 import 'package:DozerOwner/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:DozerOwner/features/authentication/presentation/widget/rounded_button.dart';
 import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
-import 'package:DozerOwner/features/equipment/presentation/screens/equipment_info_filling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String? errorMessage;
-  bool isLogin = true;
-  bool isEmailError = false;
-  bool isPasswordError = false;
+  String? errorMessage = '';
+  bool isPhoneNumberError = false;
+  bool isFieldEmpty = false;
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
-  // Future<void> signInWithEmailAndPassword() async {
-  //   try {
-  //     await Auth().(
-  //       email: emailController.text.trim(),
-  //       password: passwordController.text,
-  //     );
-  //     // Navigate to the home page after successful login
-  //     Navigator.pushAndRemoveUntil(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => Home()),
-  //       (route) => false,
-  //     );
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       errorMessage = 'No user found for that email.';
-  //       isEmailError = true;
-  //       isPasswordError = false;
-  //     } else if (e.code == 'invalid-email') {
-  //       errorMessage = 'Invalid email address.';
-  //       isEmailError = true;
-  //       isPasswordError = false;
-  //     } else if (e.code == 'wrong-password') {
-  //       errorMessage = 'Wrong password provided for that user.';
-  //       isEmailError = false;
-  //       isPasswordError = true;
-  //     } else {
-  //       errorMessage = 'All fields must be filled.';
-  //       isEmailError = false;
-  //       isPasswordError = false;
-  //     }
-  //     // Update the UI to show the error message
-  //     setState(() {});
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  Future<void> signUpWithPhoneNumber() async {
+    // Validate input fields
+    if (phoneNumberController.text.trim().isEmpty) {
+      errorMessage = 'All fields must be filled.';
+      isFieldEmpty = true;
+    } else {
+      isFieldEmpty = false; // Reset isFieldEmpty if all fields are filled
+    }
+
+    if (isFieldEmpty) {
+      setState(() {});
+      return;
+    }
+
+    try {
+      // Send OTP to the provided phone number
+      final otpCode =
+          await Auth().sendOtpToPhoneNumber(phoneNumberController.text.trim());
+
+      // ignore: use_build_context_synchronously
+      context.go(
+          '/${AppRoutes.otpVerfication}?phoneNumber=${phoneNumberController.text.trim()}&otpCode=$otpCode');
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       await Auth().signInWithGoogle();
-
-      // Navigate to the home screen after successful sign-in
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => InfoFillingPage()),
-      );
+      context.go('/${AppRoutes.form}');
     } catch (e) {
       print(e);
     }
@@ -77,150 +63,150 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(5.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10.h),
-                Center(
-                  child: Text(
-                    'Welcome Back!',
-                    style: TextStyle(
-                      color: greyTextColor,
-                      fontSize: 4.h,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                CustomTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  icon: Icons.email,
-                ),
-                if (isEmailError)
-                  Text(
-                    errorMessage ?? '',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                CustomTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                    icon: Icons.lock,
-                    validator: Validator.validatePassword),
-                if (isPasswordError)
-                  Text(
-                    errorMessage ?? '',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                SizedBox(height: 10.h),
-                if (errorMessage != null &&
-                    errorMessage!.isNotEmpty &&
-                    !isEmailError &&
-                    !isPasswordError)
-                  Text(
-                    errorMessage!,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                // RoundedButton(
-                //   width: double.infinity,
-                //   buttonColor: primary,
-                //   onPressed: signInWithEmailAndPassword,
-                //   child: Text(
-                //     'Login',
-                //     style: TextStyle(
-                //       fontSize: 2.h,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: 1.h),
-                Row(
-                  children: [
-                    const Expanded(
-                      child: Divider(
-                        color: Colors.grey,
-                        height: 1.5,
-                        thickness: 0.3,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 1.h),
-                      child: Text(
-                        'OR',
-                        style: TextStyle(
-                          fontSize: 2.h,
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                      child: Divider(
-                        color: Colors.grey,
-                        height: 1.5,
-                        thickness: 0.3,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 1.h),
-                RoundedButton(
-                  onPressed: () {
-                    // Handle sign up with Google logic here
-                    signInWithGoogle(context);
-                  },
-                  height: 6.h,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/google.png',
-                        height: 4.h,
-                        width: 4.h,
-                      ),
-                      const Text(
-                        'Continue with Google',
-                        style: TextStyle(color: black),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 1.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Create new account?"),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: black,
             ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 17.w, vertical: 30.h),
+                child: Column(
+                  children: [
+                    Text(
+                      'Welcome Back!',
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 100.h),
+                    CustomTextField(
+                      controller: phoneNumberController,
+                      hintText: 'Phone Number',
+                      icon: Icons.phone,
+                      isError: isPhoneNumberError,
+                      validator: Validator.validatePhoneNumber,
+                    ),
+                    if (isPhoneNumberError)
+                      Text(
+                        errorMessage ?? '',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    if (isFieldEmpty)
+                      const Text(
+                        'All fields must be filled.',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    SizedBox(height: 50.h),
+                    RoundedButton(
+                      width: double.infinity,
+                      buttonColor: primaryColor,
+                      onPressed: signUpWithPhoneNumber,
+                      child: Text(
+                        'Send OTP',
+                        style: TextStyle(
+                            fontSize: 14.h,
+                            fontWeight: FontWeight.bold,
+                            color: white),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: Divider(
+                            color: Colors.grey,
+                            height: 1.5,
+                            thickness: 0.3,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 1.h),
+                          child: Text(
+                            'OR',
+                            style: TextStyle(
+                              fontSize: 14.h,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          child: Divider(
+                            color: Colors.grey,
+                            height: 1.5,
+                            thickness: 0.3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    RoundedButton(
+                      onPressed: () {
+                        Auth().signInWithGoogle();
+                      },
+                      height: 50.h,
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/google.png',
+                            height: 45.h,
+                            width: 45.w,
+                          ),
+                          SizedBox(width: 5.w),
+                          Text(
+                            'Continue with Google',
+                            style: TextStyle(color: black, fontSize: 14.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Create new account?"),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          child: const Text(
+                            "Sign up",
+                            style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

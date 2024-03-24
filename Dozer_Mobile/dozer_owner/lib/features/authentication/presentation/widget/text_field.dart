@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   final bool isError;
   final String? Function(String?)?  validator;
 
-  const CustomTextField({
+  const CustomTextField({super.key, 
     required this.controller,
     required this.hintText,
     this.icon,
@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: icon != null ? Icon(icon) : null,
           hintText: hintText,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(7.w),
+            borderRadius: BorderRadius.circular(7.r),
           ),
         ),
       ),

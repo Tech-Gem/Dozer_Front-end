@@ -46,6 +46,13 @@ class _ProfilePageState extends State<ProfilePage> {
         return Scaffold(
           body: Stack(
             children: [
+              // if (state is ProfileLoadingState)
+              //   const Expanded(
+              //     child: Center(
+              //       child: CircularProgressIndicator(),
+              //     ),
+              //   ),
+              // if (state is ProfileLoadedState)
               Column(
                 children: [
                   Expanded(
@@ -65,7 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           SizedBox(
                             height: 110.h,
                           ),
-                          if (state is ProfileLoadedState)
                             Stack(
                               children: [
                                 CircleAvatar(
@@ -308,9 +314,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
-                  if (state is ProfileLoadingState)
-                    const Expanded(
-                        child: Center(child: CircularProgressIndicator())),
                   if (state is ProfileFailureState)
                     Expanded(
                       child: TextButton(

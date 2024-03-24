@@ -5,22 +5,18 @@ import 'package:DozerOwner/core/validation/validation.dart';
 import 'package:DozerOwner/features/authentication/presentation/widget/text_field.dart';
 import 'package:DozerOwner/features/equipment/data/datasources/equipment_remote_datasource.dart';
 import 'package:DozerOwner/features/equipment/data/models/equipment_model.dart';
-import 'package:DozerOwner/features/equipment/presentation/screens/confirm_page.dart';
 import 'package:DozerOwner/features/equipment/presentation/screens/review_equipment_page.dart';
 import 'package:DozerOwner/features/equipment/presentation/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-// import 'package:cloudinary/cloudinary.dart';
 import 'package:http/http.dart' as http;
-// import 'package:cloudinary_flutter/cloudinary_context.dart';
-// import 'package:cloudinary_flutter/image/cld_image.dart';
-// import 'package:cloudinary_url_gen/cloudinary.dart';
 
 class InfoFillingPage extends StatefulWidget {
+  const InfoFillingPage({super.key});
+
   @override
   _InfoFillingPageState createState() => _InfoFillingPageState();
 }
@@ -88,7 +84,8 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
         _isValid = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all the required fields.')),
+        const SnackBar(
+            content: Text('Please fill in all the required fields.')),
       );
     }
   }
@@ -98,7 +95,8 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Form Page', style: TextStyle(color: Colors.white)),
+            title:
+                const Text('Form Page', style: TextStyle(color: Colors.white)),
             backgroundColor: primaryColor,
             actions: [
               GestureDetector(
@@ -111,14 +109,14 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                   //   ),
                   // );
                 },
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   // Display user profile image
-                  backgroundImage: NetworkImage(
-                      'https://picsum.photos/250?image=9'),
+                  backgroundImage:
+                      NetworkImage('https://picsum.photos/250?image=9'),
                   radius: 15,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                   width:
                       10), // Add some spacing between the image and the title
             ],
@@ -243,7 +241,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       hintText: 'Category',
                       icon: Icons.category,
                       validator: Validator.validateCategory,
-                      dropdownValues: {
+                      dropdownValues: const {
                         'CompactEquipment': 'CompactEquipment',
                         'HeavyEarthmoving': 'HeavyEarthmoving',
                         'LiftAerialWorkPlatform': 'LiftAerialWorkPlatform',
@@ -267,7 +265,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                         controller: TextEditingController(),
                         decoration: InputDecoration(
                           hintText: 'Image',
-                          icon: Icon(Icons.image),
+                          icon: const Icon(Icons.image),
                           suffixIcon: imageFile != null
                               ? Image.file(
                                   imageFile!,
@@ -342,7 +340,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                       icon: Icons.directions_car,
                       validator: Validator.validateTransportation,
                     ),
-                    SizedBox(height: 24.0),
+                    SizedBox(height: 34.h),
                     ElevatedButton(
                       onPressed: () {
                         validateInputs();
@@ -392,7 +390,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
                           );
                         }
                       },
-                      child: Text('Submit'),
+                      child: const Text('Submit'),
                     ),
                   ],
                 ),
@@ -431,10 +429,7 @@ class _InfoFillingPageState extends State<InfoFillingPage> {
       debugPrint('Equipment created successfully!');
       // debugPrint('Error creating equipment: $e');
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ConfirmationPage()),
-      );
+      context.go('/${AppRoutes.confirm}');
     } catch (e) {
       // Handle error connecting to the backend or creating the equipment
       print('Error creating equipment: $e');
