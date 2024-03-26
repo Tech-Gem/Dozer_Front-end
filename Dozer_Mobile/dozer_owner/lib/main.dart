@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
           routerConfig: appRoute.router,
           debugShowCheckedModeBanner: false,
-          title: 'RideShare',
+          title: 'Dozer',
           theme: ThemeData(
             fontFamily: 'poppins',
             colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
